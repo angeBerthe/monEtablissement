@@ -13,11 +13,13 @@ import java.util.Set;
 public class Teacher extends Person {
 
 
-    @Column(nullable = false, name = "vacant")
-    private Boolean vacant;
+    @Column(name = "available")
+    private boolean available;
 
-    @Column(nullable = false, name = "matiereEnseigne")
-    private String matiereEnseigne;
+    @Column( name = "specialty")
+    private String specialty;
+
+
 
 
 

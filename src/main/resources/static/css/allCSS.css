@@ -90,11 +90,14 @@ h1 {
 .logo {
     text-align: center;
     display: flex;
+    font-size: 20px;
 }
 
 .logo h2 {
     margin-top: 10px;
     color: #ECF0F1;
+    margin-left: 10px;
+    font-size: 40px;
 }
 
 .menu {
@@ -338,5 +341,48 @@ td {
     text-decoration: none;
     cursor: pointer;
 }
+
+.search-form {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-form .form-control {
+    width: 300px;
+    margin-right: 10px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 30px;
+    font-size: 40px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+}
+
+.search-form .search-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-left: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 0 5px 5px 0;
+}
+
+.search-form .search-button:hover {
+    background-color: #0056b3;
+}
+
+.search-form select {
+    width: 200px;
+    padding: 10px;
+    font-size: 16px;
+}
+
 
 

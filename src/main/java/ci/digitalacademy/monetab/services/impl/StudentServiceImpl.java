@@ -1,5 +1,6 @@
 package ci.digitalacademy.monetab.services.impl;
 
+import ci.digitalacademy.monetab.models.Gender;
 import ci.digitalacademy.monetab.models.Student;
 import ci.digitalacademy.monetab.repositories.StudentRepository;
 import ci.digitalacademy.monetab.services.StudentService;
@@ -36,12 +37,11 @@ public class StudentServiceImpl implements StudentService {
         return findOne(studentDTO.getId_person()).map(existiengStudent->{
             existiengStudent.setLastName(studentDTO.getLastName());
             existiengStudent.setFirstName(studentDTO.getFirstName());
-            existiengStudent.setDateDeNaissance(studentDTO.getDateDeNaissance());
-            existiengStudent.setVille(studentDTO.getVille());
-            existiengStudent.setTelephone(studentDTO.getTelephone());
-            existiengStudent.setClasse(studentDTO.getClasse());
-            existiengStudent.setEmail(studentDTO.getEmail());
-            existiengStudent.setGenre(studentDTO.getGenre());
+            existiengStudent.setBirthDate(studentDTO.getBirthDate());
+            existiengStudent.setPhoneNumberTutor(studentDTO.getPhoneNumberTutor());
+            existiengStudent.setUrlPicture(studentDTO.getUrlPicture());
+            existiengStudent.setPhoneNumber(studentDTO.getPhoneNumber());
+            existiengStudent.setGender(studentDTO.getGender());
             existiengStudent.setMatricule(studentDTO.getMatricule());
             return save(studentDTO);
         }).orElseThrow(()->new IllegalArgumentException());
@@ -61,6 +61,14 @@ public class StudentServiceImpl implements StudentService {
             return studentMapper.fromEntity(student);
         }).toList();
     }
+
+    @Override
+    public List<StudentDTO> findByLastNameOrGenderOrMatricule(String query, String gender) {
+
+        List<Student> students = studentRepository.findByLastNameIgnoreCaseOrMatriculeIgnoreCaseAndGender(query  , query , Gender.valueOf(gender));
+        return students.stream().map(student -> studentMapper.fromEntity(student)).toList();
+    }
+
 
     @Override
     public void delete(Long id_person) {

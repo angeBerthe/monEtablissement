@@ -1,8 +1,5 @@
 package ci.digitalacademy.monetab.services;
 
-import ci.digitalacademy.monetab.models.Address;
-import ci.digitalacademy.monetab.models.NoteFile;
-import ci.digitalacademy.monetab.models.User;
 import ci.digitalacademy.monetab.services.dto.AddressDTO;
 
 import java.util.List;

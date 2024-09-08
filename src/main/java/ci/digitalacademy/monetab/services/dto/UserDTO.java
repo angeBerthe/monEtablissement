@@ -1,9 +1,12 @@
 package ci.digitalacademy.monetab.services.dto;
 
+import ci.digitalacademy.monetab.models.RoleUser;
+import ci.digitalacademy.monetab.models.School;
 import jakarta.persistence.Column;
 import lombok.*;
 
 import java.time.Instant;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -19,5 +22,9 @@ public class UserDTO {
     private String password;
 
     private Instant creationDate;
+
+    private Set<RoleUserDTO> userRole;
+
+    private SchoolDTO school;
 
 }

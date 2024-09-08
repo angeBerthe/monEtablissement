@@ -2,13 +2,18 @@ package ci.digitalacademy.monetab;
 
 import ci.digitalacademy.monetab.models.*;
 import ci.digitalacademy.monetab.services.*;
+import ci.digitalacademy.monetab.services.dto.AppSettingDTO;
+import ci.digitalacademy.monetab.services.dto.RoleUserDTO;
+import ci.digitalacademy.monetab.services.dto.SchoolDTO;
 import ci.digitalacademy.monetab.services.dto.UserDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.management.relation.Role;
 import java.sql.Date;
 import java.time.Instant;
 import java.util.*;
@@ -17,15 +22,16 @@ import java.util.*;
 @AllArgsConstructor
 public class MonetabApplication implements CommandLineRunner {
 
+    private final BCryptPasswordEncoder passwordEncoder;
     private UserService userService;
-
-    private NoteFileService noteFileService;
-
     private StudentService studentService;
 
     private TeacherService teacherService;
 
     private AddressService addressService;
+    private RoleUserService roleUserService;
+    private AppSettingService appSettingService;
+    private SchoolService schoolService;
 
     public static void main(String[] args) {
         SpringApplication.run(MonetabApplication.class, args);
@@ -33,93 +39,66 @@ public class MonetabApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
-
 /*
-        Teacher teacher = new Teacher();
-        teacher.setVacant(true);
-        teacher.setMatiereEnseigne("java");
-        teacher.setProchainCours("python");
-        teacher.setSujetProchaineReunion("Devoir");
-        teacherService.save(teacher);
+       RoleUserDTO role1 = new RoleUserDTO();
+        role1.setRole("admin");
+        RoleUserDTO role2 = new RoleUserDTO();
+        role2.setRole("staff");
+        RoleUserDTO role3 = new RoleUserDTO();
+        role3.setRole("other");
 
+        List<RoleUserDTO> roleUsersDTO = Arrays.asList(role1, role2, role3);
+       roleUsersDTO = roleUserService.initRoles(roleUsersDTO);
 
-        NoteFile noteFile1 = new NoteFile();
-        noteFile1.setNote("12");
-        noteFile1.setAnnee("2023");
-        NoteFile noteFile2 = new NoteFile();
-        noteFile2.setNote("16");
-        noteFile2.setAnnee("2024");
-        noteFile1.setTeacher(teacher);
-        noteFile2.setTeacher(teacher);
-        noteFileService.save(noteFile1);
-        noteFileService.save(noteFile2);
+        AppSettingDTO appSettingDTO = new AppSettingDTO();
 
+        appSettingDTO.setSmtpServer("mail");
+        appSettingDTO.setSmtpUsername("monEcole");
+        appSettingDTO.setSmtpPassword("monEcole123");
+        appSettingDTO.setSmtpPort(587);
 
-        List<Teacher> teachers = teacherService.findAll();
-        System.out.println(teachers);
+        AppSettingDTO settingDTO = appSettingService.initApp(appSettingDTO);
 
-        Set<NoteFile> noteFiles = teachers.get(0).getNoteFiles();
-        System.out.println(noteFiles);
+        SchoolDTO schoolDTO = new SchoolDTO();
+        schoolDTO.setName("upb");
+        schoolDTO.setUrlLogo("https://cdn-icons-png.freepik.com/256/8074/8074788.png?semt=ais_hybrid");
+        schoolDTO.setAppSetting(settingDTO);
+        schoolDTO = schoolService.initSchool(schoolDTO);
 
+        Set<RoleUserDTO> roleUserAnge = new HashSet<>();
+        roleUserAnge.add(roleUsersDTO.get(0));
+
+        Set<RoleUserDTO> roleUserStaff = new HashSet<>();
+        roleUserStaff.add(roleUsersDTO.get(1));
+
+        Set<RoleUserDTO> roleUserOther = new HashSet<>();
+        roleUserOther.add(roleUsersDTO.get(2));
+
+        UserDTO ange = new UserDTO();
+        ange.setPseudo("angeB");
+        ange.setPassword("angeB123");
+        ange.setCreationDate(Instant.now());
+        ange.setSchool(schoolDTO);
+        ange.setRoles(roleUserAnge);
+
+        UserDTO staff = new UserDTO();
+        staff.setPseudo("delmas");
+        staff.setPassword("delmas007");
+        staff.setCreationDate(Instant.now());
+        staff.setSchool(schoolDTO);
+        staff.setRoles(roleUserStaff);
+
+        UserDTO other = new UserDTO();
+        other.setPseudo("bakus");
+        other.setPassword("bakus005");
+        other.setCreationDate(Instant.now());
+        other.setSchool(schoolDTO);
+        other.setRoles(roleUserOther);
+
+        List<UserDTO> users = List.of(ange, staff, other);
+        userService.initUser(users);
 
 */
-
-        //Enregistrement d'un élève
-        /*Student student = new Student();
-        student.setMatricule("123456S");
-        student.setClasse("licence1");
-        student.setEmail("koako@gmail.com");
-        student.setLastName("kouakou");
-        student.setFirstName("koako");
-
-        Student student1 = new Student();
-        student1.setMatricule("123456D");
-        student1.setClasse("licence3");
-        student1.setEmail("kouassi@gmail.com");
-        student1.setLastName("amani");
-        student1.setFirstName("kouassi");
-
-        studentService.save(student);
-        studentService.save(student1);
-
-        //Enregistrement d'un professeur
-
-        Teacher teacher = new Teacher();
-
-        teacher.setLastName("Digbe");
-        teacher.setFirstName("Henri");
-        teacher.setEmail("digbehenri@gmail.com");
-        teacher.setMatiereEnseigne("math");
-        teacher.setVacant(true);
-        teacher.setProchainCours("physique");
-        teacher.setSujetProchaineReunion("conseil");
-
-        Teacher teacher1 = new Teacher();
-
-        teacher1.setLastName("Doumbia");
-        teacher1.setFirstName("idriss");
-        teacher1.setEmail("doumbiaidriss@gmail.com");
-        teacher1.setMatiereEnseigne("français");
-        teacher1.setVacant(true);
-        teacher1.setProchainCours("histoire");
-        teacher1.setSujetProchaineReunion("importance de phsique");
-
-        teacherService.save(teacher);
-        teacherService.save(teacher1);
-*/
-        //Enregistrement de l'utilisateur
-
-/*
-        UserDTO userDTO = new UserDTO();
-
-        userDTO.setPseudo("angeB");
-        userDTO.setPassword("angeB123");
-        userDTO.setCreationDate(Instant.now());
-
-        userService.save(userDTO);
-*/
-
 
     }
 

@@ -11,8 +11,8 @@ import lombok.Setter;
 @Setter
 public class TeacherDTO extends PersonDTO{
 
-    private Boolean vacant;
+    private boolean available;
 
-    private String matiereEnseigne;
+    private String specialty;
 
 }

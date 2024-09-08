@@ -1,8 +1,9 @@
 package ci.digitalacademy.monetab.services.dto;
 
+import ci.digitalacademy.monetab.models.Absence;
 import lombok.*;
 
-import java.util.Date;
+import java.util.Set;
 
 
 @Getter
@@ -10,10 +11,9 @@ import java.util.Date;
 public class StudentDTO extends PersonDTO{
 
 
-    private String classe;
-
     private String matricule;
 
+    private String phoneNumberTutor;
 
-
+    private Set<AbsenceDTO> absences;
 }

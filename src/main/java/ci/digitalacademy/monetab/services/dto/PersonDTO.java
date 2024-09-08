@@ -1,10 +1,14 @@
 package ci.digitalacademy.monetab.services.dto;
 
 import ci.digitalacademy.monetab.models.Address;
+import ci.digitalacademy.monetab.models.Gender;
+import ci.digitalacademy.monetab.models.User;
 import jakarta.persistence.Column;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -19,18 +23,17 @@ public class PersonDTO {
 
     private String lastName;
 
-    private String email;
+    private Gender gender;
 
-    private String genre;
+    private String urlPicture;
 
-    private String ville;
+    private String phoneNumber;
 
-    private String telephone;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "dateDeNaissance", nullable = false)
-    private Date dateDeNaissance;
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    private LocalDate birthDate;
 
     private Address address;
+
+    private User user;
 
 }

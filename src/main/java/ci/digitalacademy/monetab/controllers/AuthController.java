@@ -1,6 +1,7 @@
 package ci.digitalacademy.monetab.controllers;
 
 import ci.digitalacademy.monetab.models.User;
+import ci.digitalacademy.monetab.services.SchoolService;
 import ci.digitalacademy.monetab.services.UserService;
 import ci.digitalacademy.monetab.services.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
@@ -14,18 +15,20 @@ import java.util.Optional;
 @Controller
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping
+@RequestMapping("/auth")
 public class AuthController {
 
     private final UserService userService;
+    private final SchoolService schoolService;
 
     @GetMapping
     public String showLogin(Model model){
         model.addAttribute("user", new UserDTO());
+        model.addAttribute("schoolName", schoolService.findAll().stream().findFirst().orElse(null));
         return "auth/login";
     }
 
-    @PostMapping("/login")
+   /* @PostMapping("/login")
     public String login(@RequestParam("pseudo") String pseudo,
                         @RequestParam("password") String password,
                         Model model) {
@@ -41,6 +44,6 @@ public class AuthController {
             model.addAttribute("error", "Pseudo ou mot de passe incorrect.");
             return "auth/login";
         }
-    }
+    }*/
 }
 

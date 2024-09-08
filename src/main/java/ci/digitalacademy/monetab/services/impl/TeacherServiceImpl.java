@@ -1,8 +1,11 @@
 package ci.digitalacademy.monetab.services.impl;
 
+import ci.digitalacademy.monetab.models.Gender;
+import ci.digitalacademy.monetab.models.Student;
 import ci.digitalacademy.monetab.models.Teacher;
 import ci.digitalacademy.monetab.repositories.TeacherRepository;
 import ci.digitalacademy.monetab.services.TeacherService;
+import ci.digitalacademy.monetab.services.dto.StudentDTO;
 import ci.digitalacademy.monetab.services.dto.TeacherDTO;
 import ci.digitalacademy.monetab.services.mapper.TeacherMapper;
 import lombok.RequiredArgsConstructor;
@@ -35,13 +38,10 @@ public class TeacherServiceImpl implements TeacherService {
         return findOne(teacherDTO.getId_person()).map(existingTeacher ->{
             existingTeacher.setLastName(teacherDTO.getLastName());
             existingTeacher.setFirstName(teacherDTO.getFirstName());
-            existingTeacher.setDateDeNaissance(teacherDTO.getDateDeNaissance());
-            existingTeacher.setVille(teacherDTO.getVille());
-            existingTeacher.setTelephone(teacherDTO.getTelephone());
-            existingTeacher.setMatiereEnseigne(teacherDTO.getMatiereEnseigne());
-            existingTeacher.setEmail(teacherDTO.getEmail());
-            existingTeacher.setGenre(teacherDTO.getGenre());
-            existingTeacher.setVacant(teacherDTO.getVacant());
+            existingTeacher.setBirthDate(teacherDTO.getBirthDate());
+            existingTeacher.setPhoneNumber(teacherDTO.getPhoneNumber());
+            existingTeacher.setSpecialty(teacherDTO.getSpecialty());
+            existingTeacher.setGender(teacherDTO.getGender());
             return save(teacherDTO);
         }).orElseThrow(() ->new IllegalArgumentException());
 
@@ -60,6 +60,12 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherRepository.findAll().stream().map(teacher -> {
             return teacherMapper.fromEntity(teacher);
         }).toList();
+    }
+
+    @Override
+    public List<TeacherDTO> findByLastNameOrSpecialtyAndGender(String query, String gender) {
+        List<Teacher> teachers = teacherRepository.findByLastNameOrSpecialtyAndGender(query , query ,  Gender.valueOf(gender));
+        return teachers.stream().map(teacher -> teacherMapper.fromEntity(teacher)).toList();
     }
 
     @Override

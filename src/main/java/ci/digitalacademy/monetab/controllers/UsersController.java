@@ -1,18 +1,17 @@
 package ci.digitalacademy.monetab.controllers;
 
-import ci.digitalacademy.monetab.models.User;
+import ci.digitalacademy.monetab.services.RoleUserService;
 import ci.digitalacademy.monetab.services.UserService;
 import ci.digitalacademy.monetab.services.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +22,7 @@ import java.util.Optional;
 public class UsersController {
 
     private final UserService userService;
+    private final RoleUserService roleUserService;
 
     @GetMapping("/add")
     public String showAddUserPage(Model model){
@@ -62,5 +62,17 @@ public class UsersController {
     public String deleteUser(@PathVariable Long id_user) {
         userService.delete(id_user);
         return "redirect:/users";
+    }
+
+    @GetMapping("/search")
+    public String searchTeachers(@RequestParam LocalDate date  , @RequestParam String role, Model model)
+    {
+        List<UserDTO> users = userService.findByCreatedDateLessThanAndRoleUserNameRole(Instant.from(date.atStartOfDay(ZoneOffset.systemDefault())), role);
+        model.addAttribute("users", users);
+        model.addAttribute("date", date);
+        model.addAttribute("role", role);
+        model.addAttribute("roles", roleUserService.findAll());
+
+        return "users/list";
     }
 }

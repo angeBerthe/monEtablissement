@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -15,35 +17,36 @@ import java.util.Date;
 //@DiscriminatorColumn(name = "person_type")
 @Entity
 @Table(name = "person")
-public abstract class Person {
+public abstract class Person implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id_person;
 
-    @Column(name = "first_name", nullable = false)
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "last_name", nullable = false)
+    @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "email", nullable = false, unique = true)
-    private String email;
+    @Column(name = "phone_number",unique = true)
+    private String phoneNumber;
 
-    @Column(name = "genre", nullable = false)
-    private String genre;
+    @Column(name = "url_picture")
+    private String urlPicture;
 
-    @Column(name = "ville", nullable = false)
-    private String ville;
 
-    @Column(name = "telephone", nullable = false)
-    private String telephone;
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    @Column(name = "birth_date")
+    private LocalDate birthDate;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "dateDeNaissance", nullable = false)
-    private Date dateDeNaissance;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private User user;
 
 }

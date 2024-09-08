@@ -4,30 +4,29 @@ package ci.digitalacademy.monetab.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @Entity
-@Builder
 @Table(name = "address")
-public class Address {
+public class Address implements Serializable {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_addess;
 
-    @Column(nullable = false, name = "country")
+    @Column(name = "country")
     private String country;
 
-    @Column(nullable = false, name = "city")
+    @Column( name = "city")
     private String city;
 
-    @Column(nullable = false, name = "street")
+    @Column( name = "street")
     private String street;
-
-
 
 }

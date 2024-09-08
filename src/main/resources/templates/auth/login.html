@@ -2,13 +2,13 @@
 <html lang="en"
 
       xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mon Etab - Login</title>
-    <link rel="stylesheet" href="css/login.css">
-    <link  href="https://www.codeur.com/tuto/bootstrap/creer-site-responsive-bootstrap-5/">
+    <link rel="stylesheet" href="/css/login.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -17,25 +17,18 @@
 <body>
 <div class="login-container">
     <div class="login-box">
-        <div class="logo-container" style="margin-bottom: 20px">
-            <img th:src="@{/icons/login.png}"  style="width: 80px;height: 80px;margin-left: 75px" alt="Mon Etab Logo">
-            <h2>Mon Etab</h2>
+        <div class="logo-container">
+          <img th:src="${schoolName.urlLogo }"  alt="Mon Etab Logo" src="">
+            <h2 th:text="${schoolName.name}"></h2>
         </div>
-        <form th:action="@{/login}" method="post">
-            <div>
-                <input type="text" id="pseudo" name="pseudo" placeholder="Pseudo" required>
-            </div>
-            <div>
-                <input type="password" id="password" name="password" placeholder="Mot de passe" required>
-            </div>
-            <div th:if="${error != null}" th:text="${error}" style="color: red;"></div>
-            <div>
-                <button class="button" type="submit">Se connecter</button>
-            </div>
-        </form>
 
+        <form th:action="@{/auth}" method="post">
+            <input type="text" name="username" placeholder="Pseudo" required>
+            <input type="password" name="password" placeholder="Mot de passe" required>
+            <button type="submit" >Connexion</button>
+        </form>
     </div>
 </div>
-<script src="JavaScript/homePage.js"></script>
+<script th:src="@{/JavaScript/homePage.js}"></script>
 </body>
 </html>

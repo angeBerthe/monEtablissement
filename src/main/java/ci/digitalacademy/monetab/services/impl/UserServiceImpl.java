@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,17 +60,34 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(Long id_user) {
-        log.debug("Request to update {}", id_user);
-        userRepository.deleteById(id_user);
+    public List<UserDTO> initUser(List<UserDTO> users) {
+        List<UserDTO > usersDto = findAll();
+        if (usersDto.isEmpty()){
+            users.forEach(user->{
+                save(user);
+            });
+        }
+        return findAll();
     }
 
     @Override
+    public List<UserDTO> findByCreatedDateLessThanAndRoleUserNameRole(Instant creationDate, String role) {
+        List<User> users = userRepository.findByCreationDateLessThanAndRoleUserNameRole(creationDate, role);
+        return users.stream().map(user -> userMapper.fromEntity(user)).toList();
+    }
+
+    @Override
+    public void delete(Long id_user) {
+
+        userRepository.deleteById(id_user);
+    }
+
+   /* @Override
     public Optional<UserDTO> findByPseudoAndPassword(String pseudo, String password) {
         log.debug("Request to find user by pseudo: {} and password: {}", pseudo, password);
         return userRepository.findByPseudoAndPassword(pseudo, password)
                 .map(userMapper::fromEntity);
     }
-
+*/
 
 }

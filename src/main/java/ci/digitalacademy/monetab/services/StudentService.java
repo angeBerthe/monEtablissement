@@ -17,5 +17,7 @@ public interface StudentService {
 
     List<StudentDTO> findAll();
 
+    List<StudentDTO> findByLastNameOrGenderOrMatricule(String query , String gender);
+
     void delete(Long id_person);
 }

@@ -5,7 +5,7 @@
 >
 <head th:insert="fragments/fragment::head" ></head>
 <body>
-<div class="sidebar"  th:insert="fragments/fragment::sidebar"></div>
+<div class="sidebar" th:insert="~{fragments/fragment::sidebar(schoolName=${schoolName})}"></div>
 
 <div class="main-content">
   <h1>Tableau de bord</h1>

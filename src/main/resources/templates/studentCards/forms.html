@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/fragment::head"></head>
+<body>
+<div class="sidebar" th:insert="~{fragments/fragment::sidebar(schoolName=${schoolName})}"></div>
+
+<div class="main-content">
+    <main>
+        <div class="retour-container">
+            <a th:href="@{/studentCards}" class="retour">← Retour</a>
+        </div>
+        <!-- Titre dynamique basé sur la présence des deux objets -->
+        <h2 th:text="${studentCard.id_cards == null } ? 'Add student studentCards' : 'Modify student studentCards'"></h2>
+
+        <form id="addStudentForm" th:action="@{/studentCards}" th:object="${studentCard}" method="post">
+            <input type="hidden" th:field="*{id_cards}" />
+
+            <div class="form-row">
+                <select id="studentSelect" th:field="*{student}">
+                    <option value="" disabled selected>Choisissez un étudiant</option>
+                    <option th:each="student:${students}"
+                            th:value="${student.id_person}"
+                            th:text="${student.firstName} "></option>
+                </select>
+            </div>
+            <div class="form-row">
+                <input type="text" id="reference" th:field="*{reference}" placeholder="reference" required />
+            </div>
+            <div class="form-row">
+                <input type="date" id="issueDate" th:field="*{issueDate}" placeholder="Date issue" required />
+            </div>
+            <div class="form-row">
+                <input type="date" id="expirationDate" th:field="*{expirationDate}" placeholder="Date expiration" required />
+            </div>
+            <div class="form-row buttons">
+                <button type="button" class="btn-cancel">Annuler</button>
+                <button type="submit" class="btn-save">Enregistrer</button>
+            </div>
+        </form>
+    </main>
+</div>
+
+<th:block th:insert="fragments/fragment::gender"></th:block>
+<th:block th:insert="fragments/fragment::modal"></th:block>
+</body>
+</html>

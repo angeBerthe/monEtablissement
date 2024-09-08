@@ -17,5 +17,7 @@ public interface TeacherService {
 
     List<TeacherDTO> findAll();
 
+    List<TeacherDTO> findByLastNameOrSpecialtyAndGender(String query, String gender);
+
     void delete(Long id_person);
 }

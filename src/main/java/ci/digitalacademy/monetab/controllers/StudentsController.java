@@ -58,4 +58,14 @@ public class StudentsController {
         studentService.delete(id_person);
         return "redirect:/students";
     }
+
+    @GetMapping("/search")
+    public String searchStudents(@RequestParam String query  ,@RequestParam String gender, Model model) {
+        List<StudentDTO> students = studentService.findByLastNameOrGenderOrMatricule(query , gender);
+        model.addAttribute("students", students);
+        model.addAttribute("query", query);
+        model.addAttribute("gender", gender);
+
+        return "students/list";
+    }
 }

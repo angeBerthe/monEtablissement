@@ -5,12 +5,22 @@
 >
 <head th:insert="fragments/fragment::head" ></head>
 <body>
-<div class="sidebar"  th:insert="fragments/fragment::sidebar"></div>
+<div class="sidebar" th:insert="~{fragments/fragment::sidebar(schoolName=${schoolName})}"></div>
 
 <div class="main-content">
     <main>
         <header>
-            <h1>Professeur (<span th:text="${teachers.size()}"></span>)</h1>
+            <h1>Teacher (<span th:text="${teachers.size()}"></span>)</h1>
+
+            <form th:action="@{/teachers/search}" method="get" class="search-form">
+                <input class="form-control me-2 w-100" th:value="${query}" name="query" type="search" placeholder="RECHERCHE : (NOM , GENRE , MATRICULE)" aria-label="Search">
+                <select name="gender"  class="form-control" th:value="${gender}">
+                    <option value="MAN" th:if="${gender == 'MAN'} ? 'selected':''">HOMME</option>
+                    <option value="WOMAN" th:if="${gender == 'WOMAN'} ? 'selected':''">FEMME</option>
+                    <option value="OTHER" th:if="${gender == 'OTHER'} ? 'selected':''">AUTRE</option>
+                </select>
+                <button type="submit" class="search-button">Search</button>
+            </form>
             <a th:href="@{/teachers/add}">
             <button class="add-student"><img src="../icons/plus.png" style="width: 30px;height: 30px" alt=""></button>
             </a>
@@ -19,25 +29,25 @@
             <table>
                 <thead>
                 <tr>
-                    <th>Nom</th>
-                    <th>Prénom</th>
-                    <th>Matiere</th>
-                    <th>Vacant</th>
-                    <th>Téléphone</th>
-                    <th>Ville</th>
-                    <th>DateNaissance</th>
+                    <th>FirstName</th>
+                    <th>LastName</th>
+                    <th>Available</th>
+                    <th>Speciality</th>
+                    <th>gender</th>
+                    <th>Birthday</th>
+                    <th>Phone</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="teacher:${teachers}">
-                    <td th:text="${teacher.lastName}"></td>
                     <td th:text="${teacher.firstName}"></td>
-                    <td  th:text="${teacher.matiereEnseigne}"></td>
-                    <td  th:text="${teacher.vacant}"></td>
-                    <td th:text="${teacher.telephone}"></td>
-                    <td th:text="${teacher.ville}"></td>
-                    <td th:text="${#dates.format(teacher.dateDeNaissance, 'dd-MM-yyyy')}"></td>
+                    <td th:text="${teacher.lastName}"></td>
+                    <td  th:text="${teacher.available}"></td>
+                    <td th:text="${teacher.specialty}"></td>
+                    <td th:text="${teacher.gender}"></td>
+                    <td th:text="${teacher.birthDate}"></td>
+                    <td th:text="${teacher.phoneNumber}"></td>
                     <td>
                         <a th:href="@{/teachers/{id_person}(id_person=${teacher.id_person})}">
                         <button class="edit-btn">Modifier</button>

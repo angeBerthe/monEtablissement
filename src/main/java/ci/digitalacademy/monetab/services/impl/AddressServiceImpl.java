@@ -32,7 +32,7 @@ public class AddressServiceImpl implements AddressService {
         log.debug("Request to update: {}", addressDTO);
         return findOne(addressDTO.getId_addess()).map(existingAddress ->{
              existingAddress.setCountry(addressDTO.getCountry());
-            existingAddress.setCity(addressDTO.getCity());
+             existingAddress.setCity(addressDTO.getCity());
             return save(addressDTO);
         }).orElseThrow(() ->new IllegalArgumentException());
 
